@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Codocs</title>
+  <link rel="stylesheet" href="popup.css" />
+</head>
+<body>
+  <div class="sheen" aria-hidden="true"></div>
+
+  <header>
+    <div class="brand">
+      <span class="brand-mark">
+        <img src="/icons/48.png" alt="" width="22" height="22" />
+      </span>
+      <span class="brand-meta">
+        <span class="brand-name">Codocs</span>
+        <span class="brand-tag">Syntax highlighting for Docs</span>
+      </span>
+    </div>
+    <span class="version">v1.0</span>
+  </header>
+
+  <main>
+    <div class="field-row">
+      <label for="lang-select">Language</label>
+      <div class="select-wrap">
+        <select id="lang-select"></select>
+      </div>
+    </div>
+
+    <div class="button-group">
+      <button id="btn-selection" class="btn btn-primary">
+        <span class="btn-label">
+          <svg class="btn-icon" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+            <path d="M9 8l-4 4 4 4M15 8l4 4-4 4" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+          Format selection
+        </span>
+        <span class="kbd">
+          <kbd>Ctrl</kbd><kbd>⇧</kbd><kbd>Y</kbd>
+        </span>
+      </button>
+
+      <button id="btn-whole-doc" class="btn btn-secondary is-soon" disabled aria-disabled="true">
+        <span class="btn-label">
+          <svg class="btn-icon" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+            <path d="M7 3h7l5 5v13a0 0 0 0 1 0 0H7a1 1 0 0 1-1-1V4a1 1 0 0 1 1-1z" stroke="currentColor" stroke-width="1.7" stroke-linejoin="round"/>
+            <path d="M14 3v5h5M9 13h6M9 16h4" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"/>
+          </svg>
+          Format whole doc
+        </span>
+        <span class="badge">Soon</span>
+      </button>
+    </div>
+
+    <p class="hint">
+      Select code, format, then press <kbd class="kbd-inline">Ctrl</kbd><kbd class="kbd-inline">V</kbd> to paste.
+    </p>
+
+    <div id="status" class="status hidden"></div>
+  </main>
+
+  <footer class="credit">
+    Skedaddled by
+    <a href="https://github.com/juuli6nn" target="_blank" rel="noopener noreferrer">juuli6nn</a>
+  </footer>
+
+  <script src="popup.js" type="module"></script>
+</body>
+</html>
