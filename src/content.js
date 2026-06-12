@@ -1,4 +1,4 @@
-import { tokenize } from './lib/tokenize.js';
+import { tokenize, detectLanguage } from './lib/tokenize.js';
 import { buildClipboardHtml } from './lib/render-html.js';
 import { reindentCode } from './lib/reindent.js';
 
@@ -94,16 +94,23 @@ if (window.self === window.top) {
         const tStart = Date.now();
         await chrome.storage.local.remove('codocs_last_copy');
 
+        const triggerCopy = () => {
+          try { (iframe?.contentDocument || document).execCommand('copy'); } catch {}
+        };
+
         // Copy the current selection on the user's behalf, so they don't need a
         // separate Ctrl+C before invoking the shortcut.
-        try { (iframe?.contentDocument || document).execCommand('copy'); } catch {}
+        triggerCopy();
 
         // Poll until the clipboard differs from the snapshot, which means the new
         // selection has landed. We accept changed content from either the copy
-        // listener above or a direct read.
+        // listener above or a direct read. Re-issuing the copy every few rounds
+        // makes a differing selection reliably overwrite a stale clipboard, so we
+        // don't fall back to the previously formatted block.
         let text = null;
-        for (let i = 0; i < 14; i++) {
-          await wait(120);
+        for (let i = 0; i < 20; i++) {
+          if (i > 0 && i % 3 === 0) triggerCopy();
+          await wait(80);
 
           const { codocs_last_copy } = await chrome.storage.local.get('codocs_last_copy');
           if (codocs_last_copy && codocs_last_copy.time >= tStart &&
@@ -136,10 +143,14 @@ if (window.self === window.top) {
           return;
         }
 
-        const lang = (!msg.language || msg.language === 'auto') ? null : msg.language;
+        const chosen = (!msg.language || msg.language === 'auto') ? null : msg.language;
 
-        // Normalize line endings, collapse runs of blank lines, then re-indent.
-        let code = text.replace(/\r\n/g, '\n').replace(/\r/g, '\n').replace(/\n{3,}/g, '\n\n').trimEnd();
+        // Normalize line endings and collapse blank lines before processing.
+        let code = text.replace(/\r\n/g, '\n').replace(/\r/g, '\n').replace(/\u2028|\u2029/g, '\n').replace(/\n{3,}/g, '\n\n').trimEnd();
+
+        // Resolve the language BEFORE reindenting so the right formatter runs on
+        // the auto-detect path too (e.g. pasted SQL detected as SQL, not C++).
+        const lang = chosen || detectLanguage(code);
         code = reindentCode(code, lang);
 
         const { tokens, detectedLanguage } = tokenize(code, lang);

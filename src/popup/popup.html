@@ -11,15 +11,9 @@
 
   <header>
     <div class="brand">
-      <span class="brand-mark">
-        <img src="/icons/48.png" alt="" width="22" height="22" />
-      </span>
-      <span class="brand-meta">
-        <span class="brand-name">Codocs</span>
-        <span class="brand-tag">Syntax highlighting for Docs</span>
-      </span>
+      <img class="brand-icon" src="/icons/48.png" alt="" aria-hidden="true" />
+      <span class="brand-wordmark" aria-label="Codocs"><span class="wm-co">co</span><span class="wm-docs">docs</span></span>
     </div>
-    <span class="version">v1.0</span>
   </header>
 
   <main>
@@ -55,17 +49,12 @@
       </button>
     </div>
 
-    <p class="hint">
-      Select code, format, then press <kbd class="kbd-inline">Ctrl</kbd><kbd class="kbd-inline">V</kbd> to paste.
-    </p>
+    <p class="hint">Copy code, format, then <kbd class="kbd-inline">Ctrl</kbd>+<kbd class="kbd-inline">V</kbd> to paste.</p>
 
     <div id="status" class="status hidden"></div>
   </main>
 
-  <footer class="credit">
-    Skedaddled by
-    <a href="https://github.com/juuli6nn" target="_blank" rel="noopener noreferrer">juuli6nn</a>
-  </footer>
+  <footer class="credit">Skedaddled by <a class="credit-link" href="https://github.com/juuli6nn" target="_blank" rel="noopener noreferrer">juuli6nn</a></footer>
 
   <script src="popup.js" type="module"></script>
 </body>

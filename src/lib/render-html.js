@@ -24,7 +24,7 @@ export function buildClipboardHtml(tokens) {
       // Set the color explicitly on every span. Without it, Docs falls back to
       // the surrounding paragraph's text color (often black) instead of the
       // theme foreground.
-      return `<span style="color:${color};font-family:${FONT};font-size:10pt;">${escaped}</span>`;
+      return `<span style="color:${color};font-family:${FONT};font-size:11pt;">${escaped}</span>`;
     }).join('');
   });
 
@@ -38,7 +38,9 @@ export function buildClipboardHtml(tokens) {
   // Set the background with both the legacy bgcolor attribute and the
   // background-color property. Docs honors these on table cells but drops the
   // background shorthand, so we avoid the shorthand entirely.
-  return `<table cellpadding="0" cellspacing="0" width="${WIDTH}" bgcolor="${BG}" style="width:${WIDTH}px;border-collapse:collapse;background-color:${BG};border:none;table-layout:fixed;"><tbody><tr><td width="${WIDTH}" bgcolor="${BG}" style="width:${WIDTH}px;padding:14pt 18pt;background-color:${BG};border:none;"><p style="font-family:${FONT};font-size:10pt;line-height:1.2;color:${FG};margin:0;padding:0;white-space:pre-wrap;">${body}</p></td></tr></tbody></table>`;
+  // Font-size is set on the <td> AND the <p> — Docs inherits from whichever it
+  // reads first, and span-level declarations alone are often ignored.
+  return `<table cellpadding="0" cellspacing="0" width="${WIDTH}" bgcolor="${BG}" style="width:${WIDTH}px;border-collapse:collapse;background-color:${BG};border:none;table-layout:fixed;font-family:${FONT};font-size:11pt;"><tbody><tr><td width="${WIDTH}" bgcolor="${BG}" style="width:${WIDTH}px;padding:14pt 18pt;background-color:${BG};border:none;font-family:${FONT};font-size:11pt;"><p style="font-family:${FONT};font-size:11pt;line-height:1.3;color:${FG};margin:0;padding:0;white-space:pre-wrap;">${body}</p></td></tr></tbody></table>`;
 }
 
 // Split a flat token list into one array per line, breaking tokens on newlines.

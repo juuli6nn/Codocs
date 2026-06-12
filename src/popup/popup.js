@@ -1,3 +1,12 @@
+// Self-hosted fonts (bundled by Vite — no external requests, per the privacy
+// promise). Space Grotesk for titles, Inter for secondary text.
+import '@fontsource/space-grotesk/500.css';
+import '@fontsource/space-grotesk/600.css';
+import '@fontsource/space-grotesk/700.css';
+import '@fontsource/inter/400.css';
+import '@fontsource/inter/500.css';
+import '@fontsource/inter/600.css';
+
 import { SUPPORTED_LANGUAGES } from '../lib/languages.js';
 
 /*
